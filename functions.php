@@ -1,8 +1,5 @@
 <?php
-$dbhost='localhost';
-$dbname='publications';
-$dbuser='boi';
-$dbpass='244466666';
+require_once 'login.php';
 
 $connection = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 if($connection->connect_error) die("fatal error boi");

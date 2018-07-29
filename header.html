@@ -2,29 +2,42 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>header</title>
+    <title>Sayit</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/evil-icons@1.9.0/assets/evil-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/evil-icons@1.9.0/assets/evil-icons.min.js"></script>
     <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="shortcut icon" href="favicon.ico">
     <script src="jquery-2.2.4.min.js"></script>
   </head>
   <body>
     <ul class="menu">
-      <li><span class="logo">
-        <i>Sayit</i></li>
+      <span class="logo">
+        <a href="index.php"><i>Sayit</i></a></li>
       </span>
-      <li>
-        <li id="newquote">
-        <div   data-icon="ei-pencil" data-size='m' ></div>
-        </li>
-        <li>
+        <span id='newquote'>
+        <div data-icon="ei-pencil" data-size='m' ></div></span>
         <div data-icon='ei-eye' data-size='m'></div>
-        </li>
-
         <div data-icon='ei-user' data-size='m'>
         </div>
-        </li>
     </ul>
 
-    <span id="container"></span>
+    <span id="container" >
+
+      <form class="inputquote" action="index.php" method="post">
+
+        <div>
+          <label for="quotearea" class="textprompt" >Type a beautiful quote</label>
+        </div>
+
+          <textarea id="quotearea" name="userquote" rows="3" cols=40" required > </textarea>
+          <br>
+          <label class="textprompt" for="username">By</label>
+          <input id="username" spellcheck="false" maxlength="16" type="text" name="quoter" value="" required>
+          <br>
+          <div class="submit">
+            <input id="submitbutton" type="submit" name="" value="Post">
+          </div>
+      </form>
+
+    </span>
