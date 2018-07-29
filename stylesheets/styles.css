@@ -116,16 +116,16 @@ margin: 0 10px;
 
 .quotecontainer{
   text-align: center;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 #inputcontainerparent
 {
-  padding: 30px;
   text-align: center;
 }
 #inputcontainer{
   display: none;
   text-align: left;
-
 }
 
 textarea{

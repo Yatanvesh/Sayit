@@ -17,7 +17,7 @@ console.log(n)
 //-----------------------------------------
 
 $('#masterlayout').load('loadAllQuotes.php',deleteInterceptor)
-
+$('#inputcontainer').hide()
 function deleteInterceptor(){
   $(".trashImg").click(function(){
     var deleteId = $(this).siblings().first().attr('id')
@@ -44,7 +44,6 @@ $('.inputquote').submit(function(event){
 
   var quote = $('#quotearea').val()
   var quoter= $('#username').val()
-
 
   $.post("handler.php", {
     quote:quote,
