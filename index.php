@@ -5,18 +5,29 @@ require_once 'functions.php';
 echo <<< _END
 
 <script >
+
+// DEBUG-----------------------------------------
+var n = localStorage.getItem('on_load_counter');
+if (n === null) {
+    n = 0;
+}
+n++;
+localStorage.setItem("on_load_counter", n);
+console.log(n)
+//-----------------------------------------
+
 $('#masterlayout').load('loadAllQuotes.php',deleteInterceptor)
 
 function deleteInterceptor(){
   $(".trashImg").click(function(){
     var deleteId = $(this).siblings().first().attr('id')
-    $.post("deleteQuote.php",
+    $.post("handler.php",
     {
       id:deleteId
     },
     function(data,status){
       $('#masterlayout').load('loadAllQuotes.php',deleteInterceptor)
-      console.log('deleted')
+
     })
    });
 }
@@ -35,7 +46,7 @@ $('.inputquote').submit(function(event){
   var quoter= $('#username').val()
 
 
-  $.post("submitQuote.php", {
+  $.post("handler.php", {
     quote:quote,
     quoter:quoter
   }).complete(function(){
