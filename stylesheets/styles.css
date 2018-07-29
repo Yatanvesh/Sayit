@@ -2,30 +2,36 @@ body {
   margin:1px;
   padding: 0;
   background: #555;
-
 }
 .menu {
   margin:0;
   padding:0;
   background: #666;
-
   border:2px solid #444;
   border-radius: 10px;
-  text-align: left;
+
 }
 
 .menu div{
 margin: 0 10px;
+
 }
 .icon {
   fill:#ff8b61;
 }
-div .icon{
+.trashImg {
   position: relative;
-  top:10px;
-  fill:red;
+  top:4px;
   margin-left: 10px;
+  padding: 2px;
 }
+.trashImg:hover {
+  position: relative;
+  top:3px;
+  margin-left: 10px;
+  height: 18px;
+}
+
 .icon:hover{
   fill:#ffb360;
 }
@@ -111,9 +117,15 @@ div .icon{
 .quotecontainer{
   text-align: center;
 }
-
-#container{
+#inputcontainerparent
+{
+  padding: 30px;
+  text-align: center;
+}
+#inputcontainer{
   display: none;
+  text-align: left;
+
 }
 
 textarea{

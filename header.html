@@ -13,24 +13,24 @@
   <body>
     <ul class="menu">
       <span class="logo">
-        <a href="index.php"><i>Sayit</i></a></li>
+        <a id="sitelogo" href="index.php"><i>Sayit</i></a></li>
       </span>
-        <span id='newquote'>
+        <span id='newquote' style="margin-left:20px">
         <div data-icon="ei-pencil" data-size='m' ></div></span>
         <div data-icon='ei-eye' data-size='m'></div>
-        <div data-icon='ei-user' data-size='m'>
+        <div data-icon='ei-gear' data-size='m'>
         </div>
     </ul>
+  <div id="inputcontainerparent">
+    <div id="inputcontainer" >
 
-    <span id="container" >
-
-      <form class="inputquote" action="index.php" method="post">
+      <form class="inputquote" action="index.php" method="post" autocomplete="off">
 
         <div>
           <label for="quotearea" class="textprompt" >Type a beautiful quote</label>
         </div>
 
-          <textarea id="quotearea" name="userquote" rows="3" cols=40" required > </textarea>
+          <textarea id="quotearea" name="userquote" rows="3" cols="40" required > </textarea>
           <br>
           <label class="textprompt" for="username">By</label>
           <input id="username" spellcheck="false" maxlength="16" type="text" name="quoter" value="" required>
@@ -40,4 +40,7 @@
           </div>
       </form>
 
-    </span>
+    </div>
+  </div>
+
+  <div id="masterlayout" ></div>

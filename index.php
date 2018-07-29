@@ -2,53 +2,55 @@
 require_once 'header.html';
 require_once 'functions.php';
 
-if(isset($_GET['del']))
-{
-  $deleteId= sanitizeString($_GET['del']);
-  queryMysql("Delete from quotes where id='$deleteId'");
-}
-
-if(isset($_POST['userquote']))
-{
-  $userquote= sanitizeString($_POST['userquote']);
-  $username  = sanitizeString($_POST['quoter']);
-  queryMysql("INSERT INTO quotes (quote,quoter) values('$userquote','$username')");
-}
-
-$result = queryMysql("SELECT id,quote,quoter from quotes");
-$num    = $result->num_rows;
-echo "<br>";
-for ($j = 0 ; $j < $num ; ++$j)
-{
-  $row = $result->fetch_array(MYSQLI_BOTH);
-  echo "<div class='quotecontainer'>";
-  $id=$row['id'];
-  echo "<div id='$id'class='quote' >#" . $row['id'] . ": ". $row['quote'] . "</div>";
-  echo "<div class='quoter' >-" . $row['quoter'] . "</div>";
-  echo "<span class='trash'><span data-icon='ei-trash' data-size=s></span></span><br>";
-  echo "</div>";
-}
-
 echo <<< _END
 
 <script >
+$('#masterlayout').load('loadAllQuotes.php',deleteInterceptor)
+
+function deleteInterceptor(){
+  $(".trashImg").click(function(){
+    var deleteId = $(this).siblings().first().attr('id')
+    $.post("deleteQuote.php",
+    {
+      id:deleteId
+    },
+    function(data,status){
+      $('#masterlayout').load('loadAllQuotes.php',deleteInterceptor)
+      console.log('deleted')
+    })
+   });
+}
 
 $('#newquote').click(function()
 {
-$('#container').slideToggle(400)
-
+$('#inputcontainer').slideToggle(400).css('display','inline-block')
 $('#quotearea').focus()
+})
+
+
+$('.inputquote').submit(function(event){
+  event.preventDefault();
+
+  var quote = $('#quotearea').val()
+  var quoter= $('#username').val()
+
+
+  $.post("submitQuote.php", {
+    quote:quote,
+    quoter:quoter
+  }).complete(function(){
+    $('#masterlayout').load('loadAllQuotes.php',deleteInterceptor)
+    $('#inputcontainer').slideToggle(200).css('display','inline-block')
+    setTimeout(function(){
+    $('.inputquote').trigger("reset")
+    },200)
+
+  })
 
 })
 
-$('.trash').click(function()
-{
-
-  var deleteId = $(this).siblings().first().attr('id')
-  window.location.href="index.php?del=" + deleteId;
 
 
-})
 </script>
 </body>
 </html>
