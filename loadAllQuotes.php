@@ -13,7 +13,7 @@ for ($j = 0 ; $j < $num ; ++$j)
 
   echo "<div class='quotecontainer'>";
   $id=$row['id'];
-  echo "<div id='$id'class='quote' >#" . $row['id'] . ": ". $row['quote'] . "</div>";
+  echo "<div id='$id' class='quote' >#" . $row['id'] . ": ". $row['quote'] . "</div>";
   echo "<div class='quoter' >-" . $row['quoter'] . "</div>";
   if( $uname == $row['quoter'] )
   {
