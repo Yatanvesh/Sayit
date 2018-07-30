@@ -5,31 +5,18 @@ if(isset($_POST['quote']))
 {
   $userquote= sanitizeString($_POST['quote']);
   $username  = sanitizeString($_POST['quoter']);
-  queryMysql("INSERT INTO quotes (quote,quoter) values('$userquote','$username')");
+  $ip = $_POST['ip'];
+
+  session_start();
+  $_SESSION['sessionUserName'] =$username;
+  queryMysql("INSERT INTO quotes (quote,quoter,ip) values('$userquote','$username','$ip')");
   $_POST['userquote'] = '';
 }
 
-if(isset($_POST['id']))
+if(isset($_POST['deleteId']))
 {
-  $deleteId= sanitizeString( $_POST['id']);
-  queryMysql("Delete from quotes where id='$deleteId'");
+    $deleteId= sanitizeString( $_POST['deleteId']);
+    queryMysql("Delete from quotes where id='$deleteId'");
 }
 
-if(isset($_REQUEST['myrequest']))
-{
-  $result = queryMysql("SELECT id,quote,quoter from quotes order by id desc");
-  $num    = $result->num_rows;
-  echo "<br>";
-  for ($j = 0 ; $j < $num ; ++$j)
-  {
-    $row = $result->fetch_array(MYSQLI_BOTH);
-
-    echo "<div class='quotecontainer'>";
-    $id=$row['id'];
-    echo "<div id='$id'class='quote' >#" . $row['id'] . ": ". $row['quote'] . "</div>";
-    echo "<div class='quoter' >-" . $row['quoter'] . "</div>";
-    echo "<img  class='trashImg' src='images/trash32.png' height='16'><br>";
-    echo "</div>";
-  }
-}
  ?>
