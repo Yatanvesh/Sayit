@@ -137,15 +137,11 @@ $('.inputquote').submit(function(event){
         $.post("handler.php", {
           fetchQuoteById:data
         },function(returnedQuoteContainer){
-          $('#masterlayout').prepend(returnedQuoteContainer)
-
+          $('#masterlayout').prepend(returnedQuoteContainer).append(function(){ Interceptor()})
         })
     }
 
   }).complete(function(){
-    setTimeout(function(){
-        Interceptor()
-    },100)
     $('#inputcontainer').slideToggle(300).css('display','inline-block')
     setTimeout(function(){
     $('.inputquote').trigger("reset")
