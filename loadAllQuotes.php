@@ -3,8 +3,6 @@ require_once 'functions.php';
 
 $result = queryMysql("SELECT id,quote,quoter from quotes order by id desc");
 $num    = $result->num_rows;
-echo "<br>";
-
 //echo "<script>document.cookie = 'uname=' +globalUserName</script>";
 $uname =$_COOKIE['uname'];
 for ($j = 0 ; $j < $num ; ++$j)

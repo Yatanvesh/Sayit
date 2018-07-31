@@ -19,14 +19,13 @@ echo "<script> var globalUserName=''";
 
 echo <<< _END
 
-
 if(globalUserName!='')
-{
-
   $('#username').val(globalUserName)
-}
+
 var ip = '$IP'
+const slideTimeout=200
 hoverDisable=false
+const minDeviceWidth=450
 
 $('#masterlayout').load('loadAllQuotes.php',Interceptor)
 
@@ -48,8 +47,6 @@ $('.customcontextmenu').click(function(){
     document.body.appendChild(dummy)
     dummy.setAttribute('id', 'dummy_id')
     //currentQuoteText = currentQuoteText.replace('{\d+:\d+\}','')
-    //console.log(currentQuoteText)
-
     document.getElementById("dummy_id").value =currentQuoteText
     dummy.select()
     document.execCommand("copy")
@@ -64,9 +61,8 @@ function Interceptor(){
   $('.quotecontainer').hover(function(){
     currentHoverId=$(this).children(":first").attr('id')
     currentQuoteText=$(this).children(":first").html() + ' ' + $(this).children(':nth-child(2)').html()
-    //console.log(currentQuoteText)
     window.oncontextmenu= function(event){
-      if($('.menu').width()>450){
+      if($('.menu').width()>minDeviceWidth){
         setTimeout(function(){
           $('.customcontextmenu').css({'display':'block','left':mouseLeft,'top':mouseTop}).html('Copy')
         },70)
@@ -75,46 +71,35 @@ function Interceptor(){
       else return true
     }
 
-if($('.menu').width()>450 && !hoverDisable ){
-  //  $(this).prev().prev().css('font-size','1.1em')
-    //$(this).prev().css('font-size','1.1em')
+if($('.menu').width()>minDeviceWidth && !hoverDisable ){
     $(this).css('font-size','1.3em')
-  //  $(this).next().css('font-size','1.1em')
-    //$(this).next().next().css('font-size','1.1em')
 }
-
   },function(){
-
-    //$(this).prev().prev().css('font-size','1.0em')
-  //  $(this).prev().css('font-size','1.0em')
-    $(this).css('font-size','1.0em')
-    //$(this).next().css('font-size','1.0em')
-  //  $(this).next().next().css('font-size','1.0em')
-//currentHoverId=-1
-//console.log(currentHoverId)
-  window.oncontextmenu= function(){
-    return true
-  }
+  $(this).css('font-size','1.0em')
+  window.oncontextmenu= function(){return true}
   })
 
   $(".trashImg").click(function(){
     var deleteId = $(this).siblings().first().attr('id')
-    hoverDisable=true
-    $('#' +deleteId).parent().slideToggle(200, function()
-    {
-      setTimeout(function(){
-        $('#masterlayout').load('loadAllQuotes.php',Interceptor)
-        hoverDisable=false
-      },300)
-
-    })
     $.post("handler.php",
     {
       deleteId:deleteId
+    }, function(data){
+      if(data==1)
+      {
+        hoverDisable=true
+        $('#' +deleteId).parent().slideToggle(200, function()
+        {
+          setTimeout(function(){
+            hoverDisable=false
+              $('#' +deleteId).parent().remove()
+          },300)
+        })
+      }
+
     })
    });
 }
-
 
 $('#newquote').click(function()
 {
@@ -122,7 +107,6 @@ $('#inputcontainer').slideToggle(400).css('display','inline-block')
 $('#quotearea').focus()
 })
 
-var slideTimeout=200
 $('#newquote').hover(function(){
   var quote=$('#sitelogo')
   quote.slideToggle(slideTimeout)
@@ -135,10 +119,8 @@ $('#newquote').hover(function(){
   quote.slideToggle(slideTimeout)
 })
 
-
 $('.inputquote').submit(function(event){
   event.preventDefault();
-
   var quote = $('#quotearea').val()
   var quoter= $('#username').val()
   globalUserName= quoter
@@ -148,10 +130,21 @@ $('.inputquote').submit(function(event){
     quote:quote,
     quoter:quoter,
     ip:ip
+  },function(data){
+
+    if(data>=0)
+    {
+        $.post("handler.php", {
+          fetchQuoteById:data
+        },function(returnedQuoteContainer){
+          $('#masterlayout').prepend(returnedQuoteContainer)
+
+        })
+    }
+
   }).complete(function(){
     setTimeout(function(){
-      $('#masterlayout').load('loadAllQuotes.php',Interceptor)
-
+        Interceptor()
     },100)
     $('#inputcontainer').slideToggle(300).css('display','inline-block')
     setTimeout(function(){
